@@ -51,11 +51,14 @@ namespace ExcelNPOI
             string[] strTitle1 = { "序号", "EID", "姓名" };
             for (int i = 0; i <= 2; i++) //0 1 2
             {
-                sheet.AddMergedRegion(new CellRangeAddress(1, 2, i, i));//合并单元格。
+                CellRangeAddress region = new CellRangeAddress(1, 2, i, i);
+                sheet.AddMergedRegion(region);//合并单元格。
                 sheet.SetColumnWidth(i, 6 * 256);
                 ICell cellTitle = rowTitle1.CreateCell(i);
                 cellTitle.SetCellValue(strTitle1[i]);
                 cellTitle.CellStyle = CreateTitleStyle(workbook);
+                RegionUtil.SetBorderLeft(1, region, sheet, workbook);//给合并单元格画框线。
+
             }
             //创建日期天数标题行及数据单元格
             Dictionary<int, int> dic = new Dictionary<int, int>(); //创建一个集合用来容纳数据行的cell值。
@@ -79,11 +82,12 @@ namespace ExcelNPOI
             string[] strTitle3 = { "出勤小时数", "未签退次数", "未签到次数", "实到天数","夜餐次数" };
             for (int i = 4; i >= 0; i--)
             {
-                sheet.AddMergedRegion(new CellRangeAddress(1, 2, cellCount - i, cellCount - i));
+                CellRangeAddress region = new CellRangeAddress(1, 2, cellCount - i, cellCount - i);
+                sheet.AddMergedRegion(region);
                 ICell cellTitle3 = rowTitle1.CreateCell(cellCount - i);
                 cellTitle3.SetCellValue(strTitle3[i]);
                 cellTitle3.CellStyle = CreateTitleStyle(workbook);
-
+                RegionUtil.SetBorderLeft(1, region, sheet, workbook);//给合并单元格画框线。
             }
 
             //循环写入数据
@@ -314,11 +318,14 @@ namespace ExcelNPOI
             string[] strTitle1 = { "序号", "EID", "姓名","部门" };
             for (int i = 0; i <= 3; i++) //0 1 2 3
             {
-                sheet.AddMergedRegion(new CellRangeAddress(1, 2, i, i));//合并单元格。
+                CellRangeAddress region = new CellRangeAddress(1, 2, i, i);
+                sheet.AddMergedRegion(region);//合并单元格。
                 sheet.SetColumnWidth(i, 6 * 256);
                 ICell cellTitle = rowTitle1.CreateCell(i);
                 cellTitle.SetCellValue(strTitle1[i]);
                 cellTitle.CellStyle = CreateTitleStyle(workbook);
+                RegionUtil.SetBorderLeft(1, region, sheet, workbook);//给合并单元格画框线。
+
             }
             //创建日期天数标题行及数据单元格
             Dictionary<int, int> dic = new Dictionary<int, int>(); //创建一个集合用来容纳数据行的cell值。
@@ -342,11 +349,13 @@ namespace ExcelNPOI
             string[] strTitle3 = { "出勤小时数", "未签退次数", "未签到次数", "早退次数","迟到次数","实到天数" };
             for (int i = 5; i >= 0; i--)
             {
-                sheet.AddMergedRegion(new CellRangeAddress(1, 2, cellCount - i, cellCount - i));
+                CellRangeAddress region = new CellRangeAddress(1, 2, cellCount - i, cellCount - i);
+                sheet.AddMergedRegion(region);
                 sheet.SetColumnWidth(cellCount - i, 6 * 256);
                 ICell cellTitle3 = rowTitle1.CreateCell(cellCount - i);
                 cellTitle3.SetCellValue(strTitle3[i]);
                 cellTitle3.CellStyle = CreateTitleStyle(workbook);
+                RegionUtil.SetBorderRight(1, region, sheet, workbook);//给合并单元格画框线。
 
             }
 
@@ -560,8 +569,6 @@ namespace ExcelNPOI
 
 
         }
-
-
 
         /// <summary>
         /// 方法：计算两个日期差值。
