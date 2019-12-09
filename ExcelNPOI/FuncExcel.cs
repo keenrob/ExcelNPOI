@@ -30,7 +30,7 @@ namespace ExcelNPOI
             IWorkbook workbook = new XSSFWorkbook();  //创建xlsx文件。
             ISheet sheet = workbook.CreateSheet(dtEnd.ToString("Y") + "考勤月报"); //创建X月报表。
             ISheet sheetSource = workbook.CreateSheet("原始数据");
-            int cellCount = DateDiff(dtBegin, dtEnd) + 7;
+            int cellCount = DateDiff(dtBegin, dtEnd) + 8;
 
             //打印设置
             sheet.PrintSetup.Landscape = true;//横向打印
@@ -63,7 +63,7 @@ namespace ExcelNPOI
             //创建日期天数标题行及数据单元格
             Dictionary<int, int> dic = new Dictionary<int, int>(); //创建一个集合用来容纳数据行的cell值。
 
-            for (int i = 3; i <= cellCount - 4; i++)
+            for (int i = 3; i <= cellCount - 5; i++)
             {
                 sheet.SetColumnWidth(i, 7 * 256);
 
@@ -87,7 +87,7 @@ namespace ExcelNPOI
                 ICell cellTitle3 = rowTitle1.CreateCell(cellCount - i);
                 cellTitle3.SetCellValue(strTitle3[i]);
                 cellTitle3.CellStyle = CreateTitleStyle(workbook);
-                RegionUtil.SetBorderLeft(1, region, sheet, workbook);//给合并单元格画框线。
+                RegionUtil.SetBorderRight(1, region, sheet, workbook);//给合并单元格画框线。
             }
 
             //循环写入数据
