@@ -9,6 +9,7 @@ namespace ExcelNPOI
     public partial class TblAttSource
     {
         public int UserID { get; set; }
+        public string SSN { get; set; }
         public string Name { get; set; }
         public string Department { get; set; }
         public DateTime DateCheck { get; set; }

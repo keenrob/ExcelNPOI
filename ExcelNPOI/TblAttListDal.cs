@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace ExcelNPOI
 {
@@ -14,23 +15,13 @@ namespace ExcelNPOI
         /// 方法：判断是否存在tblAttSource，如果存在则删除。
         /// </summary>
         /// <returns></returns>
-        private bool DropAttSource()
+        private void DropAttSource()
         {
-            bool b = true;
-            string strSQL = "drop table tblAttSource";
-            try
+            if (SQLHelper.CheckExistsTable("tblAttSource"))
             {
-                AccessHelper.Execute(strSQL);
-
+                string strSQL = "drop table tblAttSource";
+                SQLHelper.Execute(strSQL);
             }
-            catch (Exception ex)
-            {
-
-                b = false;
-                string ss = ex.Message;
-            }
-
-            return b;
 
         }
 
@@ -40,20 +31,21 @@ namespace ExcelNPOI
         /// <param name="dateB">开始日期</param>
         /// <param name="dateE">结束日期</param>
         /// <returns></returns>
-        private int GetExcute(DateTime dateB,DateTime dateE)
+        private int GetExcute(DateTime dateB, DateTime dateE)
         {
-            string strSQL = "SELECT checkinout.USERID, USERINFO.Name, DEPARTMENTS.DEPTNAME, CDate(Format([checktime], 'yyyy-mm-dd')) AS 日期, checkinout.checktime" +                   
+            //在Access中，CDate(Format([checktime], 'yyyy-mm-dd')) AS 日期
+            string strSQL = "SELECT checkinout.USERID, USERINFO.Name, DEPARTMENTS.DEPTNAME, CONVERT(VARCHAR(10),CHECKTIME,120) AS 日期, checkinout.checktime" +
                             " INTO tblAttSource " +
-                            "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) INNER JOIN DEPARTMENTS ON USERINFO.DEFAULTDEPTID = DEPARTMENTS.DEPTID "+
-                            "WHERE(checkinout.checktime >= dateB And checkinout.checktime < @dateE)";
-            return AccessHelper.Execute(strSQL, new OleDbParameter[]{
+                            "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) INNER JOIN DEPARTMENTS ON USERINFO.DEFAULTDEPTID = DEPARTMENTS.DEPTID " +
+                            "WHERE(checkinout.checktime >= @dateB And checkinout.checktime < @dateE)";
+            return SQLHelper.Execute(strSQL, new SqlParameter[]{
 
-                new OleDbParameter("@dateB",DbType.DateTime){Value=dateB},
-                new OleDbParameter("@dateE",DbType.DateTime){Value=dateE}
+                new SqlParameter("@dateB",DbType.DateTime){Value=dateB},
+                new SqlParameter("@dateE",DbType.DateTime){Value=dateE}
 
-            }) ;
-            
-            
+            });
+
+
         }
 
         /// <summary>
@@ -69,7 +61,7 @@ namespace ExcelNPOI
                             " FROM tblAttSource GROUP BY tblAttSource.USERID, tblAttSource.Name, tblAttSource.日期";
 
             //string strSQL = "select * from tblAttList";
-            OleDbDataReader reader = AccessHelper.SelectAtt(strSQL);
+            SqlDataReader reader = SQLHelper.SelectAtt(strSQL);
 
             if (reader.HasRows)
             {
@@ -79,7 +71,7 @@ namespace ExcelNPOI
                     {
                         UserID = reader.GetInt32(0),
                         //UName = reader["uName"].ToString(),
-                        UName=MidString( reader.GetValue(1).ToString().Trim()),
+                        UName = MidString(reader.GetValue(1).ToString().Trim()),
                         Dep = reader["dep"].ToString(),
                         AttDate = reader.GetDateTime(3),
                         Time1 = reader.GetDateTime(4).ToLongTimeString(),
@@ -102,7 +94,7 @@ namespace ExcelNPOI
         {
             List<TblAttSource> list = new List<TblAttSource>();
             string strSQL = "SELECT * from tblAttSource";
-            OleDbDataReader reader = AccessHelper.SelectAtt(strSQL);
+            SqlDataReader reader = SQLHelper.SelectAtt(strSQL);
 
             if (reader.HasRows)
             {
@@ -125,7 +117,7 @@ namespace ExcelNPOI
             return list;
         }
 
-       
+
         /// <summary>
         /// 方法：获得通过查询得到的考勤原始数据（sql语句）
         /// </summary>
@@ -135,13 +127,15 @@ namespace ExcelNPOI
         public List<TblAttSource> GetAttsouceQuery(DateTime dateB, DateTime dateE)
         {
             List<TblAttSource> list = new List<TblAttSource>();
-            string strSQL = "SELECT checkinout.USERID, USERINFO.Name, DEPARTMENTS.DEPTNAME, CDate(Format([checktime], 'yyyy-mm-dd')) AS 日期, checkinout.checktime " +
-                            "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) INNER JOIN DEPARTMENTS ON USERINFO.DEFAULTDEPTID = DEPARTMENTS.DEPTID " +
-                            "WHERE(checkinout.checktime >= dateB And checkinout.checktime < @dateE) ";
+            //strSQL语句按照TeamIndex（也就是Street）、岗位进行排序。
+            string strSQL = "SELECT checkinout.USERID,USERINFO.SSN,USERINFO.Name, USERINFO.CITY as DEPTNAME, CONVERT(VARCHAR(10),CHECKTIME,120) AS 日期, checkinout.checktime " +
+                            "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) " +
+                            "WHERE(checkinout.checktime >= @dateB And checkinout.checktime < @dateE) "+
+                            "order by USERINFO.STREET,USERINFO.TITLE";
 
-            OleDbDataReader reader = AccessHelper.SelectAtt(strSQL,new OleDbParameter[] {
-                new OleDbParameter("@dateB",DbType.DateTime){Value=dateB},
-                new OleDbParameter("@dateE",DbType.DateTime){Value=dateE}
+            SqlDataReader reader = SQLHelper.SelectAtt(strSQL, new SqlParameter[] {
+                new SqlParameter("@dateB",DbType.DateTime){Value=dateB},
+                new SqlParameter("@dateE",DbType.DateTime){Value=dateE}
             });
 
             if (reader.HasRows)
@@ -151,10 +145,11 @@ namespace ExcelNPOI
                     TblAttSource model = new TblAttSource
                     {
                         UserID = reader.GetInt32(0),
-                        Name = MidString(reader.GetValue(1).ToString().Trim()),
+                        SSN=reader["SSN"].ToString(),
+                        Name = reader.GetValue(2).ToString().Trim(),
                         Department = reader["DEPTNAME"].ToString(),
-                        DateCheck = reader.GetDateTime(3),
-                        CheckTime = reader.GetDateTime(4)
+                        DateCheck =Convert.ToDateTime(reader["日期"].ToString()),
+                        CheckTime = reader.GetDateTime(5)
                     };
 
                     list.Add(model);
@@ -174,7 +169,7 @@ namespace ExcelNPOI
         /// <param name="dtBegin"></param>
         /// <param name="dtEnd"></param>
         /// <returns></returns>
-        public List<TblAttList> ImportForExcelList(DateTime dtBegin,DateTime dtEnd)
+        public List<TblAttList> ImportForExcelList(DateTime dtBegin, DateTime dtEnd)
         {
             //1.删除表：tblAttSource,因为select into 执行语句在c#中不能覆盖已经存在的表。
             DropAttSource();
@@ -183,7 +178,7 @@ namespace ExcelNPOI
             //2.按照日期的筛选条件，重新生成tblAttSource表。
             try
             {
-                int r = GetExcute(dtBegin, dtEnd); 
+                int r = GetExcute(dtBegin, dtEnd);
                 //MessageBox.Show(r.ToString());
             }
             catch (Exception)
@@ -203,7 +198,7 @@ namespace ExcelNPOI
             string strSQL = "select * from USERINFO";
 
             //string strSQL = "select * from tblAttList";
-            OleDbDataReader reader = AccessHelper.SelectAtt(strSQL);
+            SqlDataReader reader = SQLHelper.SelectAtt(strSQL);
 
             if (reader.HasRows)
             {
@@ -213,7 +208,7 @@ namespace ExcelNPOI
                     {
                         UserID = reader.GetInt32(0),
                         //UName = reader["uName"].ToString(),
-                        UName =MidString( reader.GetValue(3).ToString())
+                        UName = MidString(reader.GetValue(3).ToString())
 
                     };
 
@@ -229,14 +224,14 @@ namespace ExcelNPOI
 
         private string MidString(string str)
         {
-            string newStr="";
-            if (str!=null)
+            string newStr = "";
+            if (str != null)
             {
                 if (str.Length > 5)
                 {
                     newStr = str.Substring(0, 3);
                 }
-                else if (str.Length>=4)
+                else if (str.Length >= 4)
                 {
                     newStr = str.Substring(0, 2);
                 }
@@ -245,7 +240,7 @@ namespace ExcelNPOI
                     newStr = str;
                 }
             }
-            
+
             return newStr;
         }
     }

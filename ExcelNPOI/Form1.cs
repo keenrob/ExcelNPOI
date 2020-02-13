@@ -57,8 +57,6 @@ namespace ExcelNPOI
         //导出Excel
         private void BtnImport_Click(object sender, EventArgs e)
         {
-
-
             string strDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //获取当前系统的桌面路径
             string wbName =strDesktopPath+"\\"+ this.dtEnd.Value.ToString("D") + "考勤" + "_" ;  //2019年7月28日考勤_xxxx车间
 
@@ -84,9 +82,7 @@ namespace ExcelNPOI
             {
                 MessageBox.Show("日期间隔不能大于31天，或者结束日期不能小于开始日期");
                 return;
-            }
-
-  
+            } 
 
             DateTime dBegin =Convert.ToDateTime( this.dtBegin.Value.ToString("d"));
             DateTime dEnd = Convert.ToDateTime(this.dtEnd.Value.ToString("d")).AddDays(1);
@@ -104,14 +100,11 @@ namespace ExcelNPOI
             {
                 try
                 {
-                    //读取数据库中规范好的考勤数据
-
-
-                    List<TblAttList> attLists = dal.ImportForExcelList(dBegin, dEnd);
-                    List<TblAttSource> attSource = dal.GetAttSource();
+                    //获取时间段内所有人的数据。
+                    List<TblAttSource> attSource = dal.GetAttsouceQuery(dBegin, dEnd);
                     swReadAccess.Stop();
 
-                    if (attLists == null || attLists.Count == 0)
+                    if (attSource == null || attSource.Count == 0)
                     {
                         MessageBox.Show("没有符合条件的考勤数据。");
                         return;
@@ -120,11 +113,9 @@ namespace ExcelNPOI
                     swWriteExcel.Start();
                     foreach (string depName in depList)
                     {
-
-                        List<TblAttList> listSelect = attLists.Where(d => d.Dep == depName).ToList();
                         List<TblAttSource> listSelectSource = attSource.Where(d => d.Department == depName).ToList();
 
-                        FuncExcel.CreateBook(this.dtBegin.Value, this.dtEnd.Value, wbName + depName + ".xlsx", listSelect, listSelectSource);
+                        FuncExcel.CreateBookForCJ(this.dtBegin.Value, this.dtEnd.Value, wbName + depName + ".xlsx", listSelectSource);
 
                     }
                     swWriteExcel.Stop();
@@ -222,7 +213,7 @@ namespace ExcelNPOI
         //清理数据库，提高导出速度。但以前的数据怎么处理呢？--以前的数据应该直接写到一个备份表中，同时增加一个提取过往数据的功能。
         private void btnCleanDatabase_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("正在完善中.....");
         }
     }
 }

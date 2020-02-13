@@ -110,9 +110,9 @@
             this.checkBox5.ForeColor = System.Drawing.Color.Green;
             this.checkBox5.Location = new System.Drawing.Point(435, 73);
             this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(76, 23);
+            this.checkBox5.Size = new System.Drawing.Size(106, 23);
             this.checkBox5.TabIndex = 4;
-            this.checkBox5.Text = "前处理";
+            this.checkBox5.Text = "前处理车间";
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
             // checkBox4
@@ -206,7 +206,7 @@
             this.btnImport.ForeColor = System.Drawing.Color.Green;
             this.btnImport.Location = new System.Drawing.Point(548, 16);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(90, 32);
+            this.btnImport.Size = new System.Drawing.Size(77, 32);
             this.btnImport.TabIndex = 7;
             this.btnImport.Text = "导出";
             this.btnImport.UseVisualStyleBackColor = true;
@@ -219,17 +219,17 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(95, 15);
             this.label3.TabIndex = 9;
-            this.label3.Text = "version 1.3";
+            this.label3.Text = "version 1.6";
             // 
             // btnCleanDatabase
             // 
             this.btnCleanDatabase.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnCleanDatabase.ForeColor = System.Drawing.Color.Green;
-            this.btnCleanDatabase.Location = new System.Drawing.Point(644, 16);
+            this.btnCleanDatabase.Location = new System.Drawing.Point(631, 16);
             this.btnCleanDatabase.Name = "btnCleanDatabase";
-            this.btnCleanDatabase.Size = new System.Drawing.Size(99, 32);
+            this.btnCleanDatabase.Size = new System.Drawing.Size(112, 32);
             this.btnCleanDatabase.TabIndex = 10;
-            this.btnCleanDatabase.Text = "数据库清理";
+            this.btnCleanDatabase.Text = "历史记录归档";
             this.btnCleanDatabase.UseVisualStyleBackColor = true;
             this.btnCleanDatabase.Click += new System.EventHandler(this.btnCleanDatabase_Click);
             // 
