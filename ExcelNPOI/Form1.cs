@@ -6,10 +6,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoUpdaterDotNET;
 
 namespace ExcelNPOI
 {
@@ -37,6 +39,8 @@ namespace ExcelNPOI
         {
             //TblAttListDal dal = new TblAttListDal();
             //this.dataGridView1.DataSource = dal.GetAttListUserInfo();
+            //AutoUpdater.Start("ftp://192.168.0.158/versionUpdate.xml", new NetworkCredential("ftpUser1", "123"));
+            AutoUpdater.Start("http://192.168.0.158:8055/update/AutoUpdater.xml");
         }
 
         //获得复选框的文本值
@@ -213,7 +217,8 @@ namespace ExcelNPOI
         //清理数据库，提高导出速度。但以前的数据怎么处理呢？--以前的数据应该直接写到一个备份表中，同时增加一个提取过往数据的功能。
         private void btnCleanDatabase_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("正在完善中.....");
+            MessageBox.Show("施工中.....");
+
         }
     }
 }
