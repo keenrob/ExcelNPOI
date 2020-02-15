@@ -43,8 +43,9 @@
             this.dtBegin = new System.Windows.Forms.DateTimePicker();
             this.dtEnd = new System.Windows.Forms.DateTimePicker();
             this.btnImport = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblVer = new System.Windows.Forms.Label();
             this.btnCleanDatabase = new System.Windows.Forms.Button();
+            this.BtnCountEmp = new System.Windows.Forms.Button();
             this.groupBoxChoose.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -212,34 +213,47 @@
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.BtnImport_Click);
             // 
-            // label3
+            // lblVer
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(644, 345);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 15);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "version 1.6";
+            this.lblVer.AutoSize = true;
+            this.lblVer.Location = new System.Drawing.Point(587, 345);
+            this.lblVer.Name = "lblVer";
+            this.lblVer.Size = new System.Drawing.Size(71, 15);
+            this.lblVer.TabIndex = 9;
+            this.lblVer.Text = "version ";
             // 
             // btnCleanDatabase
             // 
             this.btnCleanDatabase.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnCleanDatabase.ForeColor = System.Drawing.Color.Green;
-            this.btnCleanDatabase.Location = new System.Drawing.Point(631, 16);
+            this.btnCleanDatabase.Location = new System.Drawing.Point(688, 16);
             this.btnCleanDatabase.Name = "btnCleanDatabase";
-            this.btnCleanDatabase.Size = new System.Drawing.Size(112, 32);
+            this.btnCleanDatabase.Size = new System.Drawing.Size(51, 32);
             this.btnCleanDatabase.TabIndex = 10;
-            this.btnCleanDatabase.Text = "历史记录归档";
+            this.btnCleanDatabase.Text = "归档";
             this.btnCleanDatabase.UseVisualStyleBackColor = true;
             this.btnCleanDatabase.Click += new System.EventHandler(this.btnCleanDatabase_Click);
+            // 
+            // BtnCountEmp
+            // 
+            this.BtnCountEmp.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BtnCountEmp.ForeColor = System.Drawing.Color.Green;
+            this.BtnCountEmp.Location = new System.Drawing.Point(631, 16);
+            this.BtnCountEmp.Name = "BtnCountEmp";
+            this.BtnCountEmp.Size = new System.Drawing.Size(51, 32);
+            this.BtnCountEmp.TabIndex = 11;
+            this.BtnCountEmp.Text = "统计";
+            this.BtnCountEmp.UseVisualStyleBackColor = true;
+            this.BtnCountEmp.Click += new System.EventHandler(this.BtnCountEmp_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(755, 369);
+            this.Controls.Add(this.BtnCountEmp);
             this.Controls.Add(this.btnCleanDatabase);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblVer);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dtEnd);
             this.Controls.Add(this.dtBegin);
@@ -275,8 +289,9 @@
         private System.Windows.Forms.DateTimePicker dtBegin;
         private System.Windows.Forms.DateTimePicker dtEnd;
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblVer;
         private System.Windows.Forms.Button btnCleanDatabase;
+        private System.Windows.Forms.Button BtnCountEmp;
     }
 }
 

@@ -6,24 +6,12 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace ExcelNPOI
 {
     public partial class TblAttListDal
     {
-        /// <summary>
-        /// 方法：判断是否存在tblAttSource，如果存在则删除。
-        /// </summary>
-        /// <returns></returns>
-        private void DropAttSource()
-        {
-            if (SQLHelper.CheckExistsTable("tblAttSource"))
-            {
-                string strSQL = "drop table tblAttSource";
-                SQLHelper.Execute(strSQL);
-            }
-
-        }
 
         /// <summary>
         /// 方法：按日期条件生成表tblAttSource
@@ -49,7 +37,7 @@ namespace ExcelNPOI
         }
 
         /// <summary>
-        /// 方法：获得查询到的数据集。
+        /// 方法：获得查询到的Access中数据集。
         /// </summary>
         /// <returns></returns>
         public List<TblAttList> GetAttList()
@@ -130,7 +118,7 @@ namespace ExcelNPOI
             //strSQL语句按照TeamIndex（也就是Street）、岗位进行排序。
             string strSQL = "SELECT checkinout.USERID,USERINFO.SSN,USERINFO.Name, USERINFO.CITY as DEPTNAME, CONVERT(VARCHAR(10),CHECKTIME,120) AS 日期, checkinout.checktime " +
                             "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) " +
-                            "WHERE(checkinout.checktime >= @dateB And checkinout.checktime < @dateE) "+
+                            "WHERE(checkinout.checktime >= @dateB And checkinout.checktime < @dateE) " +
                             "order by USERINFO.STREET,USERINFO.TITLE";
 
             SqlDataReader reader = SQLHelper.SelectAtt(strSQL, new SqlParameter[] {
@@ -145,10 +133,10 @@ namespace ExcelNPOI
                     TblAttSource model = new TblAttSource
                     {
                         UserID = reader.GetInt32(0),
-                        SSN=reader["SSN"].ToString(),
+                        SSN = reader["SSN"].ToString(),
                         Name = reader.GetValue(2).ToString().Trim(),
                         Department = reader["DEPTNAME"].ToString(),
-                        DateCheck =Convert.ToDateTime(reader["日期"].ToString()),
+                        DateCheck = Convert.ToDateTime(reader["日期"].ToString()),
                         CheckTime = reader.GetDateTime(5)
                     };
 
@@ -162,65 +150,18 @@ namespace ExcelNPOI
         }
 
 
-
         /// <summary>
-        /// 方法：导出准备导入Excel文件的数据。
+        /// 方法：获得当前日期的出勤人数。
         /// </summary>
-        /// <param name="dtBegin"></param>
-        /// <param name="dtEnd"></param>
+        /// <param name="dateE">当前日期</param>
         /// <returns></returns>
-        public List<TblAttList> ImportForExcelList(DateTime dtBegin, DateTime dtEnd)
+        internal object CountDateEmps(DateTime dateE)
         {
-            //1.删除表：tblAttSource,因为select into 执行语句在c#中不能覆盖已经存在的表。
-            DropAttSource();
-
-
-            //2.按照日期的筛选条件，重新生成tblAttSource表。
-            try
-            {
-                int r = GetExcute(dtBegin, dtEnd);
-                //MessageBox.Show(r.ToString());
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            //3.获得查询到的数据集并导出操作。
-            return GetAttList();
-
+            string strSql = "select count(distinct(USERID)) as countEmps from CHECKINOUT where cast(CHECKTIME as date) = @dateE";
+            return SQLHelper.ExecuteScalar(strSql, new SqlParameter[] {
+            new SqlParameter("@dateE",DbType.DateTime){Value=dateE}
+            });
         }
-
-
-        public List<TblAttList> GetAttListUserInfo()
-        {
-            List<TblAttList> list = new List<TblAttList>();
-            string strSQL = "select * from USERINFO";
-
-            //string strSQL = "select * from tblAttList";
-            SqlDataReader reader = SQLHelper.SelectAtt(strSQL);
-
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    TblAttList model = new TblAttList
-                    {
-                        UserID = reader.GetInt32(0),
-                        //UName = reader["uName"].ToString(),
-                        UName = MidString(reader.GetValue(3).ToString())
-
-                    };
-
-                    list.Add(model);
-                }
-
-            }
-            return list;
-
-        }
-
-
 
         private string MidString(string str)
         {

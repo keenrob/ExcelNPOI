@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows.Forms;
 using AutoUpdaterDotNET;
 
@@ -37,8 +31,10 @@ namespace ExcelNPOI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //TblAttListDal dal = new TblAttListDal();
-            //this.dataGridView1.DataSource = dal.GetAttListUserInfo();
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.lblVer.Text += version;
+
+            //自动升级。
             //AutoUpdater.Start("ftp://192.168.0.158/versionUpdate.xml", new NetworkCredential("ftpUser1", "123"));
             AutoUpdater.Start("http://192.168.0.158:8055/update/AutoUpdater.xml");
         }
@@ -218,6 +214,16 @@ namespace ExcelNPOI
         private void btnCleanDatabase_Click(object sender, EventArgs e)
         {
             MessageBox.Show("施工中.....");
+
+        }
+
+        //统计结束日期当日的打卡人数
+        private void BtnCountEmp_Click(object sender, EventArgs e)
+        {
+            TblAttListDal dal = new TblAttListDal();
+            DateTime dEnd = Convert.ToDateTime(this.dtEnd.Value.ToShortDateString());
+            MessageBox.Show("在统计人数之前，你应该确保已经下载了【结束日期】的所有考勤数据。", "提示");
+            MessageBox.Show(this.dtEnd.Value.ToLongDateString()+"共计 "+dal.CountDateEmps(dEnd).ToString()+" 人打卡出勤。");
 
         }
     }

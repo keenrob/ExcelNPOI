@@ -69,6 +69,27 @@ namespace ExcelNPOI
             }
         }
 
+        public static object ExecuteScalar(string strSQL,params SqlParameter[] param)
+        {
+            using (SqlConnection dbconnection = new SqlConnection(connectString))
+            {
+                if (dbconnection.State == ConnectionState.Closed)
+                {
+                    dbconnection.Open();
+                }
+                using (SqlCommand cmd = new SqlCommand(strSQL, dbconnection))
+                {
+                    if (param != null)
+                    {
+                        cmd.Parameters.AddRange(param);
+                    }
+
+
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+
         #region 判断数据库表是否存在，通过指定专用的连接字符串，执行一个不需要返回值的SqlCommand命令。
         /// <summary>
         /// 判断数据库表是否存在，返回页头，通过指定专用的连接字符串，执行一个不需要返回值的SqlCommand命令。
