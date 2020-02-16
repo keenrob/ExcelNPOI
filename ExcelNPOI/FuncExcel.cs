@@ -523,6 +523,8 @@ namespace ExcelNPOI
                 }
             }
 
+            //冻结左边4列，上面3行
+            sheet.CreateFreezePane(4, 3, 4, 3);   //参数要写全：第二个参数为要冻结的行数，第四个参数为下面区域可见的首行序号，第一、三为冻结列。都从1开始。
             //创建原始数据表
             IRow rowSourceTitle = sheetSource.CreateRow(0);
             string[] strSourceTitle = { "员工ID", "姓名", "部门", "日期", "打卡时间" };
@@ -824,8 +826,8 @@ namespace ExcelNPOI
                 }
             }
 
-            //冻结左边4列，上面3行
-            sheet.CreateFreezePane(0, 3, 0, 0);   //发生显示错位。不知何故。
+            //冻结左边5列，上面3行
+            sheet.CreateFreezePane(5, 3, 5, 3);   //参数要写全：第二个参数为要冻结的行数，第四个参数为下面区域可见的首行序号，第一、三为冻结列。都从1开始。
 
             //创建原始数据表
             IRow rowSourceTitle = sheetSource.CreateRow(0);
