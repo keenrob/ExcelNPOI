@@ -312,7 +312,7 @@ namespace ExcelNPOI
             IRow rowTitle1 = sheet.CreateRow(1);
             IRow rowTitle2 = sheet.CreateRow(2);
             //创建标题行数据单元格:序号、EID、姓名
-            string[] strTitle1 = { "序号", "eID", "eNO","姓名" };
+            string[] strTitle1 = { "序号", "eID", "eNO", "姓名" };
             for (int i = 0; i <= 3; i++) //0 1 2
             {
                 CellRangeAddress region = new CellRangeAddress(1, 2, i, i);
@@ -356,19 +356,19 @@ namespace ExcelNPOI
 
             //Linq方式获得新的list集合
             var listAtt = from a in listAttSource
-                        group a by new { a.UserID, a.DateCheck } into m
-                        // where m.Key.UserID == 872
-                        select new
-                        {
-                            m.Key.UserID,
-                            m.FirstOrDefault().SSN,
-                            AttDate = m.Key.DateCheck,
-                            UName = m.FirstOrDefault().Name,
-                            department = m.FirstOrDefault().Department,
-                            checkAm = TimeCheckAm(m.Min(am => am.CheckTime)),
-                            checkPm = TimeCheckPm(m.Max(pm => pm.CheckTime))
+                          group a by new { a.UserID, a.DateCheck } into m
+                          // where m.Key.UserID == 872
+                          select new
+                          {
+                              m.Key.UserID,
+                              m.FirstOrDefault().SSN,
+                              AttDate = m.Key.DateCheck,
+                              UName = m.FirstOrDefault().Name,
+                              department = m.FirstOrDefault().Department,
+                              checkAm = TimeCheckAm(m.Min(am => am.CheckTime)),
+                              checkPm = TimeCheckPm(m.Max(pm => pm.CheckTime))
 
-                        };
+                          };
 
             //循环写入数据
             IRow rowData;
@@ -396,7 +396,7 @@ namespace ExcelNPOI
                     rowData.Height = 30 * 20;
 
                     //建立序号、EID、姓名单元格 即左侧 Left
-                    string[] strLeft = { Convert.ToString(i + 1), lists[0].UserID.ToString(), lists[0].SSN,lists[0].UName };
+                    string[] strLeft = { Convert.ToString(i + 1), lists[0].UserID.ToString(), lists[0].SSN, lists[0].UName };
 
                     for (int j = 0; j < 4; j++)
                     {
@@ -442,9 +442,9 @@ namespace ExcelNPOI
 
                         //日工作时长：如果工作时长大于等于5小时，则减掉1小时午饭时间。用floor的目的是减少一些分钟的误差。
                         TimeSpan sp = pmCheckNew - amCheckNew;
-                        attHours += Math.Floor((Math.Round(sp.TotalMinutes / 60, 2) >= 5 ? Math.Round(sp.TotalMinutes / 60, 2) - 1 : Math.Round(sp.TotalMinutes / 60, 2))*10)/10;
+                        attHours += Math.Floor((Math.Round(sp.TotalMinutes / 60, 2) >= 5 ? Math.Round(sp.TotalMinutes / 60, 2) - 1 : Math.Round(sp.TotalMinutes / 60, 2)) * 10) / 10;
 
-                        attDays =Math.Floor(Math.Round(attHours / 8, 2)*10)/10; //保留1位小数但不四舍五入。
+                        attDays = Math.Floor(Math.Round(attHours / 8, 2) * 10) / 10; //保留1位小数但不四舍五入。
 
 
                         //晚餐补贴次数。
@@ -507,7 +507,7 @@ namespace ExcelNPOI
                     }
                     cellRight3.CellStyle = cellStyleTitle;
 
-                    ICell cellRight4 = rowData.CreateCell(cellCount-1);//累计小时数
+                    ICell cellRight4 = rowData.CreateCell(cellCount - 1);//累计小时数
                     cellRight4.SetCellValue(attHours);
                     cellRight4.CellStyle = cellStyleTitle;
 
@@ -581,20 +581,22 @@ namespace ExcelNPOI
 
 
         /// <summary>
-        /// 方法：导出行政各部门的考勤数据到Excel中。
+        /// 方法：导出行政各部门或全体员工的考勤数据到Excel中。
         /// </summary>
         /// <param name="dtBegin">周期起始</param>
         /// <param name="dtEnd">周期结束</param>
         /// <param name="wbName">文件名称</param>
         /// <param name="listAtt">规范的考勤数据</param>
         /// <param name="listAttSource">考勤原始数据</param>
-        public static void CreateBookForManage(DateTime dtBegin, DateTime dtEnd, string wbName, List<TblAttSource> listAttSource)
+        /// <param name="strCategory">参数为depart则导出部门数据</param>
+        public static void CreateBookForManage(DateTime dtBegin, DateTime dtEnd, string wbName, List<TblAttSource> listAttSource, string strCategory)
         {
 
             IWorkbook workbook = new XSSFWorkbook();  //创建xlsx文件。
             ISheet sheet = workbook.CreateSheet(dtEnd.ToString("Y") + "考勤月报"); //创建X月报表。
             ISheet sheetSource = workbook.CreateSheet("原始数据");
-            int cellCount = DateDiff(dtBegin, dtEnd) + 11; //周期差值+额外的10个标题列
+            int leftRightColumns = 12;//左侧与右侧的标题列的数量
+            int cellCount = DateDiff(dtBegin, dtEnd) + leftRightColumns; //周期差值+额外的n个标题列
 
             //打印设置
             sheet.PrintSetup.Landscape = true;//横向打印
@@ -613,15 +615,16 @@ namespace ExcelNPOI
             //创建标题行
             IRow rowTitle1 = sheet.CreateRow(1);
             IRow rowTitle2 = sheet.CreateRow(2);
-            //创建标题行数据单元格:序号、EID、姓名
-            string[] strTitle1 = { "序号", "eID","eNO","姓名", "部门" };
-            for (int i = 0; i <= 4; i++) //0 1 2 3 4
+
+            //创建左侧标题行数据单元格:序号、EID、姓名等
+            string[] strTitleLeft = { "序号", "eID", "eNO", "姓名", "部门" };
+            for (int i = 0; i <= strTitleLeft.Length - 1; i++) //从0开始计数：0 1 2 3 4
             {
                 CellRangeAddress region = new CellRangeAddress(1, 2, i, i);
                 sheet.AddMergedRegion(region);//合并单元格。
                 sheet.SetColumnWidth(i, 6 * 256);
                 ICell cellTitle = rowTitle1.CreateCell(i);
-                cellTitle.SetCellValue(strTitle1[i]);
+                cellTitle.SetCellValue(strTitleLeft[i]);
                 cellTitle.CellStyle = CreateTitleStyle(workbook);
                 RegionUtil.SetBorderLeft(1, region, sheet, workbook);//给合并单元格画框线。
 
@@ -629,30 +632,30 @@ namespace ExcelNPOI
             //创建日期天数标题行及数据单元格
             Dictionary<int, int> dic = new Dictionary<int, int>(); //创建一个集合用来容纳数据行的cell值。
 
-            for (int i = 5; i <= cellCount - 6; i++)
+            for (int i = strTitleLeft.Length; i < cellCount - strTitleLeft.Length; i++)
             {
                 sheet.SetColumnWidth(i, 7 * 256);
 
                 ICell cellTitle1 = rowTitle1.CreateCell(i);
-                cellTitle1.SetCellValue(Convert.ToInt32(dtBegin.AddDays(i - 5).ToString("dd")));
+                cellTitle1.SetCellValue(Convert.ToInt32(dtBegin.AddDays(i - strTitleLeft.Length).ToString("dd")));
                 cellTitle1.CellStyle = CreateTitleStyle(workbook);
 
                 ICell cellTitle2 = rowTitle2.CreateCell(i);
-                cellTitle2.SetCellValue(dtBegin.AddDays(i - 5).ToString("ddd"));
+                cellTitle2.SetCellValue(dtBegin.AddDays(i - strTitleLeft.Length).ToString("ddd"));
                 cellTitle2.CellStyle = CreateTitleStyle(workbook);
 
-                dic.Add(Convert.ToInt32(dtBegin.AddDays(i - 5).ToString("dd")), i); //给字典赋值：key 是日期Day；value是cell的索引号。
+                dic.Add(Convert.ToInt32(dtBegin.AddDays(i - strTitleLeft.Length).ToString("dd")), i); //给字典赋值：key 是日期Day；value是cell的索引号。
 
             }
-            //创建列尾的标题行数据单元格
-            string[] strTitle3 = { "出勤小时数", "未签退次数", "未签到次数", "早退次数", "迟到次数", "实到天数" };
-            for (int i = 5; i >= 0; i--)
+            //创建右侧列尾的标题行数据单元格
+            string[] strTitleRight = { "折算工数", "出勤小时数", "未签退次数", "未签到次数", "早退次数", "迟到次数", "实到天数" };
+            for (int i = strTitleRight.Length - 1; i >= 0; i--)
             {
                 CellRangeAddress region = new CellRangeAddress(1, 2, cellCount - i, cellCount - i);
                 sheet.AddMergedRegion(region);
                 sheet.SetColumnWidth(cellCount - i, 6 * 256);
                 ICell cellTitle3 = rowTitle1.CreateCell(cellCount - i);
-                cellTitle3.SetCellValue(strTitle3[i]);
+                cellTitle3.SetCellValue(strTitleRight[i]);
                 cellTitle3.CellStyle = CreateTitleStyle(workbook);
                 RegionUtil.SetBorderRight(1, region, sheet, workbook);//给合并单元格画框线。
 
@@ -678,7 +681,8 @@ namespace ExcelNPOI
 
 
                         };
-            var listAtt = query.OrderBy(q => q.UserID).OrderBy(q => q.department).ToList();
+            //var listAtt = query.OrderBy(q => q.UserID).OrderBy(q => q.department).ToList();
+            var listAtt = query.ToList();//不进行排序，因为已经在SQL语句中进行了排序。
 
             //循环写入数据
             IRow rowData;
@@ -709,7 +713,7 @@ namespace ExcelNPOI
                     rowData.Height = 30 * 20;
 
                     //建立序号、EID、姓名、部门单元格 即左侧 Left
-                    string[] strLeft = { Convert.ToString(i + 1), lists[0].UserID.ToString(),lists[0].SSN, lists[0].UName, lists[0].department };
+                    string[] strLeft = { Convert.ToString(i + 1), lists[0].UserID.ToString(), lists[0].SSN, lists[0].UName, lists[0].department };
                     //var strLefts = new { intNumber = i + 1, userID = lists[0].UserID, name = lists[0].UName };//创建匿名类。
 
                     for (int j = 0; j < 5; j++)
@@ -725,7 +729,8 @@ namespace ExcelNPOI
                     int checkAmLate = 0;//上午迟到次数
                     int checkMmLate = 0;//中午迟到次数
                     int checkLE = 0;//下午早退次数
-                    double attHours = 0.00;
+                    double attHours = 0.00;//出勤小时数量
+                    double attDays = 0.00;//折算工数
                     List<int> attIntList = new List<int>(); //建立一个int集合，长度为该员工的所有考勤数据条数。准备用考勤数据的日期（day值）填充。
                     //遍历lists里面某员工的所有考勤数据。
                     foreach (var item in lists)
@@ -777,10 +782,9 @@ namespace ExcelNPOI
 
                         //日工作时长：如果工作时长大于等于5小时，则减掉1小时午饭时间。用floor的目的是减少一些分钟的误差。
                         //如果中午没有刷卡，则下午-上午，如果刷卡了，则中午-上午 加上 下午-中午。
-                        TimeSpan sp = MmCheckNew.Hour == 0 ? pmCheckNew - amCheckNew : (MmCheckNew - amCheckNew)+(pmCheckNew-MmCheckNew);
+                        TimeSpan sp = MmCheckNew.Hour == 0 ? pmCheckNew - amCheckNew : (MmCheckNew - amCheckNew) + (pmCheckNew - MmCheckNew);
                         attHours += Math.Floor((Math.Round(sp.TotalMinutes / 60, 2) >= 5 ? Math.Round(sp.TotalMinutes / 60, 2) - 1 : Math.Round(sp.TotalMinutes / 60, 2)) * 10) / 10;
-
-                        //attDays = Math.Floor(Math.Round(attHours / 8, 2) * 10) / 10; //保留1位小数但不四舍五入。
+                        attDays = Math.Floor(Math.Round(attHours / 8, 2) * 10) / 10; //保留1位小数但不四舍五入。
 
 
                     }
@@ -796,31 +800,49 @@ namespace ExcelNPOI
                     }
 
 
-                    //建立实到天数等单元格，即最右侧 Right
-                    ICell cellRight1 = rowData.CreateCell(cellCount - 5);
+                    //建立实到天数等单元格，即最右侧 Right  strTitleRight
+                    int strRightColumns = strTitleRight.Length - 1;
+                    ICell cellRight1 = rowData.CreateCell(cellCount - strRightColumns);
                     cellRight1.SetCellValue(lists.Count());
                     cellRight1.CellStyle = cellStyleTitle;
 
-                    ICell cellRight2 = rowData.CreateCell(cellCount - 4);
-                    cellRight2.SetCellValue("早:" + checkAmLate + "\n" + "午:" + checkMmLate);
-                    //cellRight2.SetCellValue( checkAmLate);
+                    ICell cellRight2 = rowData.CreateCell(cellCount - strRightColumns + 1);
+                    if (strCategory == "depart")
+                    {
+                        cellRight2.SetCellValue("早:" + checkAmLate + "\n" + "午:" + checkMmLate);
+                    }
+                    else
+                    {
+                        cellRight2.SetCellValue(checkAmLate + checkMmLate);
+                    }
                     cellRight2.CellStyle = cellStyleTitle;
 
-                    ICell cellRight3 = rowData.CreateCell(cellCount - 3);
+                    ICell cellRight3 = rowData.CreateCell(cellCount - strRightColumns + 2);
                     cellRight3.SetCellValue(checkLE);
                     cellRight3.CellStyle = cellStyleTitle;
 
-                    ICell cellRight4 = rowData.CreateCell(cellCount - 2);
-                    cellRight4.SetCellValue("早:" + checkAttIn + "\n" + "午:" + checkAttNoonIn);
+                    ICell cellRight4 = rowData.CreateCell(cellCount - strRightColumns + 3);
+                    if (strCategory == "depart")
+                    {
+                        cellRight4.SetCellValue("早:" + checkAttIn + "\n" + "午:" + checkAttNoonIn);
+                    }
+                    else
+                    {
+                        cellRight4.SetCellValue(checkAttIn);
+                    }
                     cellRight4.CellStyle = cellStyleTitle;
 
-                    ICell cellRight5 = rowData.CreateCell(cellCount - 1);
+                    ICell cellRight5 = rowData.CreateCell(cellCount - strRightColumns + 4);
                     cellRight5.SetCellValue(checkAttOut);
                     cellRight5.CellStyle = cellStyleTitle;
 
-                    ICell cellRight6 = rowData.CreateCell(cellCount);
+                    ICell cellRight6 = rowData.CreateCell(cellCount - strRightColumns + 5);
                     cellRight6.SetCellValue(attHours);
                     cellRight6.CellStyle = cellStyleTitle;
+
+                    ICell cellRight7 = rowData.CreateCell(cellCount - strRightColumns + 6);
+                    cellRight7.SetCellValue(attDays);
+                    cellRight7.CellStyle = cellStyleTitle;
 
 
                 }

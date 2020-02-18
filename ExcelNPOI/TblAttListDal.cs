@@ -119,7 +119,7 @@ namespace ExcelNPOI
             string strSQL = "SELECT checkinout.USERID,USERINFO.SSN,USERINFO.Name, USERINFO.CITY as DEPTNAME, CONVERT(VARCHAR(10),CHECKTIME,120) AS 日期, checkinout.checktime " +
                             "FROM(USERINFO INNER JOIN checkinout ON USERINFO.USERID = checkinout.USERID) " +
                             "WHERE(checkinout.checktime >= @dateB And checkinout.checktime < @dateE) " +
-                            "order by USERINFO.STREET,USERINFO.TITLE";
+                            "order by USERINFO.STREET,USERINFO.TITLE,USERINFO.BADGENUMBER";
 
             SqlDataReader reader = SQLHelper.SelectAtt(strSQL, new SqlParameter[] {
                 new SqlParameter("@dateB",DbType.DateTime){Value=dateB},

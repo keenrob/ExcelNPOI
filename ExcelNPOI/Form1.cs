@@ -139,7 +139,7 @@ namespace ExcelNPOI
                 }
 
                 swWriteExcel.Start();
-                FuncExcel.CreateBookForManage(this.dtBegin.Value, this.dtEnd.Value, wbName + "行政考勤" + ".xlsx", listAttSource);
+                FuncExcel.CreateBookForManage(this.dtBegin.Value, this.dtEnd.Value, wbName + "行政考勤" + ".xlsx", listAttSource,"depart");
 
                 swWriteExcel.Stop();
                 swReadAccess.Stop();

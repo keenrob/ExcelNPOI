@@ -71,7 +71,7 @@ namespace ExcelNPOI
             DateTime dEnd = Convert.ToDateTime(_dEnd.ToString("d")).AddDays(1);
 
             //判断是否真的要导出数据，时间和覆盖数据的说明。
-            if (MessageBox.Show("是否导出选中部门的" + _dBegin.ToString("D") + "到" + _dEnd.ToString("D") + "的考勤数据。" +
+            if (MessageBox.Show("是否导出所有人员的" + _dBegin.ToString("D") + "到" + _dEnd.ToString("D") + "的考勤数据。" +
                 "导出文件将保存在桌面，并覆盖同名文件。导出时间比较长，请耐心等待一下。", "重要提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
             {
                 return;
@@ -88,7 +88,7 @@ namespace ExcelNPOI
             }
 
             swWriteExcel.Start();
-            FuncExcel.CreateBookForCJ(_dBegin, _dEnd, wbName + "全部人员" + ".xlsx", listAttSource);
+            FuncExcel.CreateBookForManage(_dBegin, _dEnd, wbName + "全部人员" + ".xlsx", listAttSource,"");
 
             swWriteExcel.Stop();
             swReadAccess.Stop();
