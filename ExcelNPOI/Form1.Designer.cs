@@ -44,7 +44,7 @@
             this.dtEnd = new System.Windows.Forms.DateTimePicker();
             this.btnImport = new System.Windows.Forms.Button();
             this.lblVer = new System.Windows.Forms.Label();
-            this.btnCleanDatabase = new System.Windows.Forms.Button();
+            this.BtnFunc = new System.Windows.Forms.Button();
             this.BtnCountEmp = new System.Windows.Forms.Button();
             this.groupBoxChoose.SuspendLayout();
             this.SuspendLayout();
@@ -222,17 +222,17 @@
             this.lblVer.TabIndex = 9;
             this.lblVer.Text = "version ";
             // 
-            // btnCleanDatabase
+            // BtnFunc
             // 
-            this.btnCleanDatabase.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnCleanDatabase.ForeColor = System.Drawing.Color.Green;
-            this.btnCleanDatabase.Location = new System.Drawing.Point(688, 16);
-            this.btnCleanDatabase.Name = "btnCleanDatabase";
-            this.btnCleanDatabase.Size = new System.Drawing.Size(51, 32);
-            this.btnCleanDatabase.TabIndex = 10;
-            this.btnCleanDatabase.Text = "归档";
-            this.btnCleanDatabase.UseVisualStyleBackColor = true;
-            this.btnCleanDatabase.Click += new System.EventHandler(this.btnCleanDatabase_Click);
+            this.BtnFunc.Font = new System.Drawing.Font("Franklin Gothic Medium", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnFunc.ForeColor = System.Drawing.Color.Green;
+            this.BtnFunc.Location = new System.Drawing.Point(688, 16);
+            this.BtnFunc.Name = "BtnFunc";
+            this.BtnFunc.Size = new System.Drawing.Size(51, 32);
+            this.BtnFunc.TabIndex = 10;
+            this.BtnFunc.Text = ">>>";
+            this.BtnFunc.UseVisualStyleBackColor = true;
+            this.BtnFunc.Click += new System.EventHandler(this.BtnFunc_Click);
             // 
             // BtnCountEmp
             // 
@@ -252,7 +252,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(755, 369);
             this.Controls.Add(this.BtnCountEmp);
-            this.Controls.Add(this.btnCleanDatabase);
+            this.Controls.Add(this.BtnFunc);
             this.Controls.Add(this.lblVer);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dtEnd);
@@ -290,7 +290,7 @@
         private System.Windows.Forms.DateTimePicker dtEnd;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Label lblVer;
-        private System.Windows.Forms.Button btnCleanDatabase;
+        private System.Windows.Forms.Button BtnFunc;
         private System.Windows.Forms.Button BtnCountEmp;
     }
 }

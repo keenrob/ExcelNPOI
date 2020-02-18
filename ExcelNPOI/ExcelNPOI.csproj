@@ -116,6 +116,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFunc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFunc.Designer.cs">
+      <DependentUpon>FormFunc.cs</DependentUpon>
+    </Compile>
     <Compile Include="FuncExcel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="progressForm.cs">
@@ -131,6 +137,9 @@
     <Compile Include="TblAttSource.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFunc.resx">
+      <DependentUpon>FormFunc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="progressForm.resx">
       <DependentUpon>progressForm.cs</DependentUpon>

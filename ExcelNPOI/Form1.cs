@@ -210,22 +210,12 @@ namespace ExcelNPOI
             }
         }
 
-        //清理数据库，提高导出速度。但以前的数据怎么处理呢？--以前的数据应该直接写到一个备份表中，同时增加一个提取过往数据的功能。
-        private void btnCleanDatabase_Click(object sender, EventArgs e)
+        //调出其他功能窗体。
+        private void BtnFunc_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("此操作将会把当前日期的上一年度数据单独归档。","重要提示",MessageBoxButtons.OKCancel)==DialogResult.OK)
-            {
-
-                if (this.dtEnd.Value>DateTime.Now)
-                {
-                    MessageBox.Show("【结束日期】的值不能大于当前的系统日期。");
-                    return;
-                }
-
-                
-                MessageBox.Show("施工中.....");
-
-            }
+            FormFunc formFunc = new FormFunc(this.dtBegin.Value,this.dtEnd.Value);
+            formFunc.ShowDialog();
+           
 
         }
 
