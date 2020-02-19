@@ -19,7 +19,11 @@ namespace ExcelNPOI
         public List<int> Sum = new List<int>();
         public delegate int addProgress(int i);
 
-        //设置结束日期
+        /// <summary>
+        /// 设置根据开始日期设置结束日期
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DtBegin_ValueChanged(object sender, EventArgs e)
         {
 
@@ -29,6 +33,11 @@ namespace ExcelNPOI
           
         }
 
+        /// <summary>
+        /// 窗体加载时的事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -39,7 +48,10 @@ namespace ExcelNPOI
             AutoUpdater.Start("http://192.168.0.158:8055/update/AutoUpdater.xml");
         }
 
-        //获得复选框的文本值
+        /// <summary>
+        /// 获得复选框的文本值。
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetCBText()
         {
             List<string> cbList = new List<string>();
@@ -54,7 +66,11 @@ namespace ExcelNPOI
             return cbList;
         }
 
-        //导出Excel
+        /// <summary>
+        /// 导出Excel操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnImport_Click(object sender, EventArgs e)
         {
             string strDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //获取当前系统的桌面路径
@@ -210,7 +226,11 @@ namespace ExcelNPOI
             }
         }
 
-        //调出其他功能窗体。
+        /// <summary>
+        /// 掉出其他功能窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnFunc_Click(object sender, EventArgs e)
         {
             FormFunc formFunc = new FormFunc(this.dtBegin.Value,this.dtEnd.Value);
@@ -219,7 +239,11 @@ namespace ExcelNPOI
 
         }
 
-        //统计结束日期当日的打卡人数
+        /// <summary>
+        /// 统计结束日期日的当前在岗人数。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCountEmp_Click(object sender, EventArgs e)
         {
             TblAttListDal dal = new TblAttListDal();

@@ -15,6 +15,7 @@ namespace ExcelNPOI
     {
         private readonly DateTime _dBegin;
         private readonly DateTime _dEnd;
+        string strDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //获取当前系统的桌面路径
         public FormFunc(DateTime dBegin,DateTime dEnd)
         {
             InitializeComponent();
@@ -47,8 +48,8 @@ namespace ExcelNPOI
         /// <param name="e"></param>
         private void BtnImporAllDep_Click(object sender, EventArgs e)
         {
-            string strDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //获取当前系统的桌面路径
             string wbName = strDesktopPath + "\\" + _dEnd.ToString("D") + "考勤" + "_";  //2019年7月28日考勤_xxxx车间
+
 
             Stopwatch swReadAccess = new Stopwatch();
             Stopwatch swWriteExcel = new Stopwatch();
@@ -94,6 +95,19 @@ namespace ExcelNPOI
             swReadAccess.Stop();
 
             MessageBox.Show("读数据库的时间为：" + swReadAccess.Elapsed.ToString() + " ||写入Excel的时间为：" + swWriteExcel.Elapsed.ToString());
+
+
+
+        }
+
+        /// <summary>
+        /// 获得结束日期当日前5日未出勤人员数据：结束日期应当设为发薪日期。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnGetAllLeave_Click(object sender, EventArgs e)
+        {
+            string wbName = strDesktopPath + "\\" + _dEnd.ToString("D") + "前5日未出勤人员" ;  //2019年7月28日考勤_xxxx车间
 
 
 

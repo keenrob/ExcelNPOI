@@ -163,6 +163,7 @@ namespace ExcelNPOI
             });
         }
 
+        //access数据库中，中文字符会出现乱码，原因不得而知。所以这也是要弃用access的原因之一啊。
         private string MidString(string str)
         {
             string newStr = "";
