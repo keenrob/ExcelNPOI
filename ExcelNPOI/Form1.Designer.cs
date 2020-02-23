@@ -61,9 +61,9 @@
             this.groupBoxChoose.Controls.Add(this.checkBox1);
             this.groupBoxChoose.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBoxChoose.Location = new System.Drawing.Point(9, 66);
-            this.groupBoxChoose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxChoose.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxChoose.Name = "groupBoxChoose";
-            this.groupBoxChoose.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxChoose.Padding = new System.Windows.Forms.Padding(2);
             this.groupBoxChoose.Size = new System.Drawing.Size(545, 207);
             this.groupBoxChoose.TabIndex = 1;
             this.groupBoxChoose.TabStop = false;
@@ -75,7 +75,7 @@
             this.checkBox8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox8.ForeColor = System.Drawing.Color.Green;
             this.checkBox8.Location = new System.Drawing.Point(326, 163);
-            this.checkBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox8.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(75, 21);
             this.checkBox8.TabIndex = 7;
@@ -89,7 +89,7 @@
             this.checkBox7.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox7.ForeColor = System.Drawing.Color.Green;
             this.checkBox7.Location = new System.Drawing.Point(326, 127);
-            this.checkBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox7.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(75, 21);
             this.checkBox7.TabIndex = 6;
@@ -102,7 +102,7 @@
             this.checkBox6.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox6.ForeColor = System.Drawing.Color.Green;
             this.checkBox6.Location = new System.Drawing.Point(326, 90);
-            this.checkBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox6.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(75, 21);
             this.checkBox6.TabIndex = 5;
@@ -115,7 +115,7 @@
             this.checkBox5.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox5.ForeColor = System.Drawing.Color.Green;
             this.checkBox5.Location = new System.Drawing.Point(326, 58);
-            this.checkBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox5.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(87, 21);
             this.checkBox5.TabIndex = 4;
@@ -128,7 +128,7 @@
             this.checkBox4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox4.ForeColor = System.Drawing.Color.Green;
             this.checkBox4.Location = new System.Drawing.Point(118, 163);
-            this.checkBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox4.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(75, 21);
             this.checkBox4.TabIndex = 3;
@@ -141,7 +141,7 @@
             this.checkBox3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox3.ForeColor = System.Drawing.Color.Green;
             this.checkBox3.Location = new System.Drawing.Point(118, 127);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(87, 21);
             this.checkBox3.TabIndex = 2;
@@ -154,7 +154,7 @@
             this.checkBox2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox2.ForeColor = System.Drawing.Color.Green;
             this.checkBox2.Location = new System.Drawing.Point(118, 90);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(87, 21);
             this.checkBox2.TabIndex = 1;
@@ -167,7 +167,7 @@
             this.checkBox1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBox1.ForeColor = System.Drawing.Color.Green;
             this.checkBox1.Location = new System.Drawing.Point(118, 58);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(87, 21);
             this.checkBox1.TabIndex = 0;
@@ -201,7 +201,7 @@
             // dtBegin
             // 
             this.dtBegin.Location = new System.Drawing.Point(70, 14);
-            this.dtBegin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtBegin.Margin = new System.Windows.Forms.Padding(2);
             this.dtBegin.Name = "dtBegin";
             this.dtBegin.Size = new System.Drawing.Size(128, 21);
             this.dtBegin.TabIndex = 4;
@@ -210,7 +210,7 @@
             // dtEnd
             // 
             this.dtEnd.Location = new System.Drawing.Point(280, 14);
-            this.dtEnd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtEnd.Margin = new System.Windows.Forms.Padding(2);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(128, 21);
             this.dtEnd.TabIndex = 5;
@@ -220,7 +220,7 @@
             this.btnImport.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnImport.ForeColor = System.Drawing.Color.Green;
             this.btnImport.Location = new System.Drawing.Point(411, 13);
-            this.btnImport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnImport.Margin = new System.Windows.Forms.Padding(2);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(58, 26);
             this.btnImport.TabIndex = 7;
@@ -243,7 +243,7 @@
             this.BtnFunc.Font = new System.Drawing.Font("Franklin Gothic Medium", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnFunc.ForeColor = System.Drawing.Color.Green;
             this.BtnFunc.Location = new System.Drawing.Point(516, 13);
-            this.BtnFunc.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnFunc.Margin = new System.Windows.Forms.Padding(2);
             this.BtnFunc.Name = "BtnFunc";
             this.BtnFunc.Size = new System.Drawing.Size(38, 26);
             this.BtnFunc.TabIndex = 10;
@@ -256,7 +256,7 @@
             this.BtnCountEmp.Font = new System.Drawing.Font("微软雅黑", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BtnCountEmp.ForeColor = System.Drawing.Color.Green;
             this.BtnCountEmp.Location = new System.Drawing.Point(473, 13);
-            this.BtnCountEmp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BtnCountEmp.Margin = new System.Windows.Forms.Padding(2);
             this.BtnCountEmp.Name = "BtnCountEmp";
             this.BtnCountEmp.Size = new System.Drawing.Size(38, 26);
             this.BtnCountEmp.TabIndex = 11;
@@ -279,8 +279,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBoxChoose);
             this.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
