@@ -27,10 +27,11 @@ namespace ExcelNPOI
         private void DtBegin_ValueChanged(object sender, EventArgs e)
         {
 
-            //根据起始日期来判断结束日期。结束日期为次月28日。
-            this.dtEnd.Value = this.dtBegin.Value.Month.Equals(1) ? this.dtBegin.Value.AddMonths(1) : this.dtBegin.Value.AddMonths(1).AddDays(-1);
-            
-          
+            //根据起始日期来判断结束日期。结束日期为次月25日。
+            //this.dtEnd.Value = this.dtBegin.Value.Month.Equals(1) ? this.dtBegin.Value.AddMonths(1) : this.dtBegin.Value.AddMonths(1).AddDays(-1);
+            this.dtEnd.Value = this.dtBegin.Value.AddMonths(1).AddDays(-1);
+
+
         }
 
         /// <summary>
@@ -98,8 +99,10 @@ namespace ExcelNPOI
             {
                 MessageBox.Show("日期间隔不能大于31天，或者结束日期不能小于开始日期");
                 return;
-            } 
+            }
 
+            int temp =FuncExcel.DateDiff(this.dtBegin.Value, this.dtEnd.Value);
+            int temp1 = this.dtEnd.Value.Subtract(this.dtBegin.Value).Days;
             DateTime dBegin =Convert.ToDateTime( this.dtBegin.Value.ToString("d"));
             DateTime dEnd = Convert.ToDateTime(this.dtEnd.Value.ToString("d")).AddDays(1);
 

@@ -632,7 +632,7 @@ namespace ExcelNPOI
             //创建日期天数标题行及数据单元格
             Dictionary<int, int> dic = new Dictionary<int, int>(); //创建一个集合用来容纳数据行的cell值。
 
-            for (int i = strTitleLeft.Length; i < cellCount - strTitleLeft.Length; i++)
+            for (int i = strTitleLeft.Length; i < cellCount - strTitleLeft.Length-1; i++)  //为什么要再减1，是因为索引是从0开始的。
             {
                 sheet.SetColumnWidth(i, 7 * 256);
 
@@ -911,7 +911,7 @@ namespace ExcelNPOI
         /// <param name="dateStart"></param>
         /// <param name="dateEnd"></param>
         /// <returns></returns>
-        private static int DateDiff(DateTime dateStart, DateTime dateEnd)
+        public static int DateDiff(DateTime dateStart, DateTime dateEnd)
         {
             DateTime start = Convert.ToDateTime(dateStart.ToShortDateString());
             DateTime end = Convert.ToDateTime(dateEnd.ToShortDateString());
