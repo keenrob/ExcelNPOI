@@ -12,7 +12,7 @@ namespace ExcelNPOI
     public static class SQLHelper
     {
         //private static readonly string connectString = ConfigurationManager.ConnectionStrings["SQLConnect"].ToString();
-        private static readonly string connectString = "Data Source=KHYYHRM;Initial Catalog=ZKTime;User ID=sa;Password=hrm5w2efa;MultipleActiveResultSets=true";
+        private static readonly string connectString = "Data Source=192.168.0.158;Initial Catalog=ZKTime;User ID=sa;Password=hrm5w2efa;MultipleActiveResultSets=true";
 
         /// <summary>
         /// 方法：按条件查询数据

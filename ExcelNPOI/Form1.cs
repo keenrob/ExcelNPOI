@@ -4,6 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoUpdaterDotNET;
 
@@ -247,12 +248,18 @@ namespace ExcelNPOI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnCountEmp_Click(object sender, EventArgs e)
+        private async void BtnCountEmp_Click(object sender, EventArgs e)
         {
             TblAttListDal dal = new TblAttListDal();
             DateTime dEnd = Convert.ToDateTime(this.dtEnd.Value.ToShortDateString());
             MessageBox.Show("在统计人数之前，你应该确保已经下载了【结束日期】的所有考勤数据。", "提示");
-            MessageBox.Show(this.dtEnd.Value.ToLongDateString()+"共计 "+dal.CountDateEmps(dEnd).ToString()+" 人打卡出勤。");
+            await Task.Run(() =>
+            {
+                MessageBox.Show(this.dtEnd.Value.ToLongDateString() + "共计 " + dal.CountDateEmps(dEnd).ToString() + " 人打卡出勤。");
+
+            });
+
+            
 
         }
     }
